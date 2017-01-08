@@ -1,17 +1,24 @@
 const webpack = require('webpack');
+var fs = require('fs');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 
-let config = {
+
+// FRONTEND
+
+let frontendConfig = {
+
+  name: 'frontend',
+  target: 'web',
 
   entry: {
     main: [
-      './src/index.js'
+      './src/frontend/index.js'
     ]
   },
 
   output: {
-    path: path.resolve(__dirname + '/dist'),
+    path: path.resolve(__dirname + '/dist/frontend'),
     filename: '[name].js',
   },
 
@@ -51,25 +58,51 @@ let config = {
 
   postcss: [
     autoprefixer({ browsers: ['last 2 versions'] }) 
-  ],
-
-  devServer: {
-    inline: true,
-    stats: {
-     colors: true,
-     hash: false,
-     timings: true,
-     chunks: false,
-     chunkModules: false,
-     modules: false
-   }
-  },
+  ]
 
 };
 
 
+// BACKEND
+
+const nodeModules = {};
+fs.readdirSync('node_modules')
+  .filter(x => ['.bin'].indexOf(x) === -1)
+  .forEach((mod) => {
+    nodeModules[mod] = `commonjs ${mod}`;
+  });
+
+const backendConfig = {
+
+  name: 'backend',
+  target: 'node',
+  externals: nodeModules,
+
+  node: {
+    __dirname: true,
+    __filename: true,
+    process: true
+  },
+
+  entry: {
+    index: [
+      './src/backend/index.js'
+    ]
+  },
+
+  output: {
+    path: path.resolve(__dirname + '/dist/backend'),
+    filename: '[name].js'
+  }
+
+}
+
+
+// DEVELOPMENT / PRODUCTION
+
+let config;
 if (process.env.NODE_ENV === 'production') {
-  config = Object.assign(config, {
+  frontendConfig = Object.assign(frontendConfig, {
 
     plugins: [
       new webpack.optimize.UglifyJsPlugin({
@@ -79,6 +112,26 @@ if (process.env.NODE_ENV === 'production') {
     ]
 
   });
+
+  config = [ frontendConfig, backendConfig ];
+} else {
+  frontendConfig = Object.assign(frontendConfig, {
+
+    devServer: {
+      inline: true,
+      stats: {
+        colors: true,
+        hash: false,
+        timings: true,
+        chunks: false,
+        chunkModules: false,
+        modules: false
+      }
+    }
+
+  });
+
+  config = frontendConfig;
 }
 
 module.exports = config;

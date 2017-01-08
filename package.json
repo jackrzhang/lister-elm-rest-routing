@@ -1,25 +1,29 @@
 {
-  "name": "elm-todos",
+  "name": "lister-elm-rest-routing",
   "version": "1.0.0",
   "description": "",
   "main": "",
   "scripts": {
+    "start": "npm run dev",
+    "dev": "npm run dev:frontend && npm run dev:backend",
+    "dev:frontend": "NODE_ENV=development webpack-dev-server --port 4568",
+    "dev:backend": "nodemon src/backend/index.js",
+    "prod": "npm run build && npm run serve",
     "build": "NODE_ENV=production webpack",
-    "clean": "rm -rf dist",
-    "dev": "webpack-dev-server --port 4568",
-    "start": "npm run dev"
+    "serve": "node dist/backend/index.js",
+    "clean": "rm -rf dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jackrzhang/elm-todos.git"
+    "url": "git+https://github.com/jackrzhang/lister-elm-rest-routing.git"
   },
   "private": true,
   "author": "Jack R. Zhang <15jzhang@gmail.com>",
   "license": "BSD3",
   "bugs": {
-    "url": "https://github.com/jackrzhang/elm-todos/issues"
+    "url": "https://github.com/jackrzhang/lister-elm-rest-routing/issues"
   },
-  "homepage": "https://github.com/jackrzhang/elm-todos#readme",
+  "homepage": "https://github.com/jackrzhang/lister-elm-rest-routing#readme",
   "dependencies": {
     "css-loader": "^0.26.1",
     "elm-webpack-loader": "^4.1.1",
