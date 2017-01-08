@@ -1,0 +1,131 @@
+/* imports */
+@import url('https://fonts.googleapis.com/css?family=Unna');
+
+/* variables */
+$font-stack: 'Unna', serif;
+$accent-color: rgb(12, 100, 100);
+$hover-color: mix(white, $accent-color, 20%);
+
+html,
+head, 
+body {
+    margin: 0;
+}
+
+html,
+input {
+  font-family: $font-stack;
+}
+
+/* document level adjustments  */
+html {
+  font-size: 17px;
+}
+@media (max-width: 500px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+/* element styling */
+body {
+  height: 100%;
+  text-align: center;
+  color: #000;
+  background-color: #fff;
+}
+
+a {
+  color: $accent-color;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+}
+
+.caret {
+  color: $accent-color;
+}
+
+input {
+  outline: none;
+  padding: 5px 10px;
+  width: 15rem;
+  max-width: 80vw;
+  margin-bottom: 1.5rem;
+  border: none;
+  border-bottom: 1px solid $accent-color;
+  font-size: 1.2rem;
+}
+input::placeholder {
+  color: rgb(160, 160, 160);
+}
+
+div.entry {
+  text-align: left;
+  font-size: 1.2rem;
+  margin: .7rem auto;
+  width: 20rem;
+  max-width: 85vw;
+
+  span.text.complete {
+    text-decoration: line-through;
+    color: rgb(160, 160, 160);
+  }
+
+  span.checkmark,
+  span.x {
+    font-size: 1.5rem;
+    line-height: 1.2rem;
+    color: $accent-color;
+    cursor: pointer;
+  }
+  span.checkmark:hover,
+  span.x:hover {
+    color: $hover-color;
+  }
+
+  div.container {
+    float: right;
+
+    span.x {
+      display: inline-block;
+      text-align: right;
+      width: 1.5rem;
+    }
+  }
+}
+
+div.control {
+  margin-top: 1.8rem;
+
+  span.filter {
+    font-size: 1rem;
+    line-height: 1.4rem;
+    margin: 0 .3rem;
+    cursor: pointer;
+    color: rgb(50, 50, 50);
+  }
+  span.filter:hover {
+    text-decoration: underline;
+  }
+
+  span.filter.current {
+    text-decoration: underline;
+  }
+}
+
+footer {
+  margin: 3rem 0;
+
+  p {
+    font-size: .7rem;
+    margin: .3rem 0;
+  }
+}
