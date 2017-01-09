@@ -4,13 +4,11 @@
   "description": "",
   "main": "",
   "scripts": {
-    "start": "npm run dev",
-    "dev": "npm run dev:frontend && npm run dev:backend",
-    "dev:frontend": "NODE_ENV=development webpack-dev-server --port 4568",
-    "dev:backend": "nodemon src/backend/index.js",
+    "dev:frontend": "NODE_ENV=development node dev-server.js --watch",
+    "dev:backend": "NODE_ENV=development nodemon src/backend/index.js",
     "prod": "npm run build && npm run serve",
     "build": "NODE_ENV=production webpack",
-    "serve": "node dist/backend/index.js",
+    "serve": "NODE_ENV=production node dist/backend/index.js",
     "clean": "rm -rf dist"
   },
   "repository": {
@@ -25,9 +23,17 @@
   },
   "homepage": "https://github.com/jackrzhang/lister-elm-rest-routing#readme",
   "dependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
     "css-loader": "^0.26.1",
+    "elm-hot-loader": "^0.5.4",
     "elm-webpack-loader": "^4.1.1",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
     "file-loader": "^0.9.0",
+    "http-proxy": "^1.16.2",
+    "json-server": "^0.9.4",
+    "morgan": "^1.7.0",
     "node-sass": "^4.1.1",
     "postcss-loader": "^1.2.1",
     "sass-loader": "^4.1.1",
@@ -35,6 +41,6 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.9.0",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-hot-middleware": "^2.15.0"
   }
 }

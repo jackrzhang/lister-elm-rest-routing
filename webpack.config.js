@@ -6,6 +6,8 @@ const autoprefixer = require('autoprefixer');
 
 // FRONTEND
 
+const FRONTEND_SRC = path.join(__dirname, './src/frontend/');
+
 let frontendConfig = {
 
   name: 'frontend',
@@ -13,13 +15,15 @@ let frontendConfig = {
 
   entry: {
     main: [
-      './src/frontend/index.js'
+      'webpack-hot-middleware/client?path=http://localhost:4568/__webpack_hmr',
+      `${FRONTEND_SRC}index.js`
     ]
   },
 
   output: {
-    path: path.resolve(__dirname + '/dist/frontend'),
+    path: '/dist/frontend',
     filename: '[name].js',
+    publicPath: 'http://localhost:4568/dist/frontend/',
   },
 
   module: {
@@ -34,6 +38,11 @@ let frontendConfig = {
         ]
       },
       {
+        test:    /\.js$/,
+        exclude: /node_modules/,
+        loader:  'babel',
+      },
+      {
         test:    /\.html$/,
         exclude: /node_modules/,
         loader:  'file?name=[name].[ext]',
@@ -41,7 +50,8 @@ let frontendConfig = {
       {
         test:    /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
-        loader:  'elm-webpack',
+        cache: false,
+        loader:  `elm-hot!elm-webpack?verbose=true&warn=true&cwd=${__dirname}`
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -50,7 +60,7 @@ let frontendConfig = {
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader',
-      },
+      }
     ],
 
     noParse: /\.elm$/,
@@ -117,17 +127,9 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   frontendConfig = Object.assign(frontendConfig, {
 
-    devServer: {
-      inline: true,
-      stats: {
-        colors: true,
-        hash: false,
-        timings: true,
-        chunks: false,
-        chunkModules: false,
-        modules: false
-      }
-    }
+    plugins: [
+      new webpack.HotModuleReplacementPlugin()
+    ]
 
   });
 

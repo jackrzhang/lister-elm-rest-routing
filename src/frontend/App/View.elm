@@ -24,7 +24,7 @@ viewControl : Model -> Html Msg
 viewControl model =
     if not (List.isEmpty model.entries.list) then
         Control.view model.control
-    else 
+    else
         div [] []
 
 
