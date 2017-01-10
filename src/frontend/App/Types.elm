@@ -21,6 +21,7 @@ type alias Model =
 type Msg
     = NoOp
     | UrlChange Location
+    | LinkClick String
     | ChainMsgs (List Msg)
     | MsgForInput Input.Msg
     | MsgForEntries Entries.Msg

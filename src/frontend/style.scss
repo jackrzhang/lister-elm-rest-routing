@@ -105,18 +105,18 @@ div.entry {
 div.control {
   margin-top: 1.8rem;
 
-  span.filter {
+  a.filter {
     font-size: 1rem;
     line-height: 1.4rem;
     margin: 0 .3rem;
     cursor: pointer;
     color: rgb(50, 50, 50);
   }
-  span.filter:hover {
+  a.filter:hover {
     text-decoration: underline;
   }
 
-  span.filter.current {
+  a.filter.current {
     text-decoration: underline;
   }
 }

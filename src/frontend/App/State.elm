@@ -34,6 +34,12 @@ update msg model =
 
         UrlChange location ->
             model ! []
+
+        LinkClick path ->
+            let cmd =
+                Navigation.newUrl path
+            in
+                model ! [ cmd ]
         
         ChainMsgs msgs ->
             (List.foldl chain (model ! []) msgs)
