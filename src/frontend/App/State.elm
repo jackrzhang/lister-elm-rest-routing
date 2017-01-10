@@ -3,6 +3,9 @@ module App.State exposing (..)
 import Navigation exposing (Location)
 
 import App.Types exposing (..)
+import App.Control.Types as Filter
+import App.Routes as Routes
+
 import App.Input.State as Input
 import App.Entries.State as Entries
 import App.Control.State as Control
@@ -12,7 +15,7 @@ import App.Control.State as Control
 
 init : Location -> ( Model, Cmd Msg )
 init location =
-    initialModel ! []
+    (locationToModel location initialModel) ! []
 
 
 initialModel : Model
@@ -33,13 +36,10 @@ update msg model =
             model ! []
 
         UrlChange location ->
-            model ! []
+            (locationToModel location model) ! []
 
         LinkClick path ->
-            let cmd =
-                Navigation.newUrl path
-            in
-                model ! [ cmd ]
+            model ! [ Navigation.newUrl path ]
         
         ChainMsgs msgs ->
             (List.foldl chain (model ! []) msgs)
@@ -55,6 +55,37 @@ update msg model =
         MsgForControl controlMsg ->
             { model | control = Control.updateModel controlMsg model.control }
                 ! []
+
+
+-- HELPERS
+
+locationToModel : Location -> Model -> Model
+locationToModel location model =
+    let 
+        route =
+            Routes.pathParser location
+                |> Maybe.withDefault Routes.All
+
+        filter =
+            case route of
+                Routes.All -> Filter.All
+                Routes.Active -> Filter.Active
+                Routes.Complete -> Filter.Complete
+
+        entriesModel = model.entries
+        controlModel = model.control
+
+        entries =
+            { entriesModel | filter = filter }
+
+        control =
+            { controlModel | filter = filter }
+
+    in
+        { model 
+            | entries = entries
+            , control = control
+        }
 
 
 chain : Msg -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )

@@ -3,18 +3,18 @@ module App.Routes exposing (..)
 import Navigation
 import UrlParser exposing (Parser, (</>), oneOf, map, s, string)
 
-type Page
+type Route
     = All
     | Active
     | Complete
 
 
-pathParser : Navigation.Location -> Maybe Page
+pathParser : Navigation.Location -> Maybe Route
 pathParser location =
     UrlParser.parsePath pageParser location
 
 
-pageParser : Parser (Page -> a) a
+pageParser : Parser (Route -> a) a
 pageParser =
     oneOf
         [ map All (s "")
