@@ -2,11 +2,11 @@ module App.Control.View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
 import Utility.OnLinkClick exposing (onLinkClick)
 
 import App.Types as App
-import App.Control.Types as Control exposing (..)
+import App.Routes as Routes
+import App.Control.Types as Control exposing (Filter(..))
 import App.Entries.Types as Entries exposing (..)
 
 
@@ -35,16 +35,16 @@ viewFilter ( filter, current ) =
             else
                 " "
 
-        filterPath =
+        route =
             case filter of
-                All -> "/"
-                Active -> "/active"
-                Complete -> "/complete"
+                All -> Routes.All
+                Active -> Routes.Active
+                Complete -> Routes.Complete
     in
         a
-            [ href filterPath
+            [ href (Routes.routeToPath route)
             , class ("filter" ++ filterStyle)
-            , onLinkClick (App.LinkClick filterPath)
+            , onLinkClick (App.NavigateTo route)
             ]
             [ text (toString filter)
             ]

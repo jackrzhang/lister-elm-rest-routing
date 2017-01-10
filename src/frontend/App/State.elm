@@ -1,9 +1,9 @@
 module App.State exposing (..)
 
-import Navigation exposing (Location)
+import Navigation exposing (..)
 
 import App.Types exposing (..)
-import App.Control.Types as Filter
+import App.Control.Types as Control exposing (Filter(..))
 import App.Routes as Routes
 
 import App.Input.State as Input
@@ -38,8 +38,8 @@ update msg model =
         UrlChange location ->
             (locationToModel location model) ! []
 
-        LinkClick path ->
-            model ! [ Navigation.newUrl path ]
+        NavigateTo route ->
+            model ! [ Navigation.newUrl (Routes.routeToPath route) ]
         
         ChainMsgs msgs ->
             (List.foldl chain (model ! []) msgs)
@@ -68,9 +68,9 @@ locationToModel location model =
 
         filter =
             case route of
-                Routes.All -> Filter.All
-                Routes.Active -> Filter.Active
-                Routes.Complete -> Filter.Complete
+                Routes.All -> All
+                Routes.Active -> Active
+                Routes.Complete -> Complete
 
         entriesModel = model.entries
         controlModel = model.control

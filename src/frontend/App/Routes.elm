@@ -9,13 +9,26 @@ type Route
     | Complete
 
 
+routeToPath : Route -> String
+routeToPath route =
+    case route of 
+        All -> 
+            "/"
+
+        Active ->
+            "/active"
+
+        Complete ->
+            "/complete"
+
+
 pathParser : Navigation.Location -> Maybe Route
 pathParser location =
-    UrlParser.parsePath pageParser location
+    UrlParser.parsePath routeParser location
 
 
-pageParser : Parser (Route -> a) a
-pageParser =
+routeParser : Parser (Route -> a) a
+routeParser =
     oneOf
         [ map All (s "")
         , map Active (s "active")
