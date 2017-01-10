@@ -50,7 +50,7 @@ server.set('view engine', '.hbs');
 server.set('views', path.join(__dirname, './views'));
 
 // serve main elm app
-server.get('/', (req, res) => {
+server.get('/*', (req, res) => {
   res.render('main');
 });
 
