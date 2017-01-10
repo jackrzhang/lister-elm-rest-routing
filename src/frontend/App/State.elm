@@ -1,5 +1,7 @@
 module App.State exposing (..)
 
+import Navigation exposing (Location)
+
 import App.Types exposing (..)
 import App.Input.State as Input
 import App.Entries.State as Entries
@@ -8,8 +10,8 @@ import App.Control.State as Control
 
 -- INIT
 
-init : ( Model, Cmd Msg )
-init =
+init : Location -> ( Model, Cmd Msg )
+init location =
     initialModel ! []
 
 
@@ -28,6 +30,9 @@ update msg model =
     case msg of
 
         NoOp ->
+            model ! []
+
+        UrlChange location ->
             model ! []
         
         ChainMsgs msgs ->

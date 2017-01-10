@@ -15,13 +15,12 @@ let frontendConfig = {
 
   entry: {
     main: [
-      'webpack-hot-middleware/client?path=http://localhost:4568/__webpack_hmr',
       `${FRONTEND_SRC}index.js`
     ]
   },
 
   output: {
-    path: '/dist/frontend',
+    path: path.join(__dirname, './dist/frontend'),
     filename: '[name].js',
     publicPath: 'http://localhost:4568/dist/frontend/',
   },
@@ -132,6 +131,9 @@ if (process.env.NODE_ENV === 'production') {
     ]
 
   });
+
+  frontendConfig.entry.main
+    .unshift('webpack-hot-middleware/client?path=http://localhost:4568/__webpack_hmr');
 
   config = frontendConfig;
 }

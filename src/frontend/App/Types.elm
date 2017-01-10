@@ -1,5 +1,7 @@
 module App.Types exposing (..)
 
+import Navigation exposing (Location)
+
 import App.Input.Types as Input
 import App.Entries.Types as Entries
 import App.Control.Types as Control
@@ -18,6 +20,7 @@ type alias Model =
 
 type Msg
     = NoOp
+    | UrlChange Location
     | ChainMsgs (List Msg)
     | MsgForInput Input.Msg
     | MsgForEntries Entries.Msg
