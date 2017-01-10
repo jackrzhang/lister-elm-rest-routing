@@ -21,6 +21,5 @@ init =
 updateModel : Msg -> Model -> Model
 updateModel msg model =
     case msg of
-
-        ApplyFilter filter ->
-            { model | filter = filter }
+        NoOp ->
+            model

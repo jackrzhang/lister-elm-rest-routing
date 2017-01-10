@@ -37,9 +37,6 @@ updateModel msg model =
         ToggleComplete id ->
             { model | list = toggleComplete id model.list }
 
-        ApplyFilter filter ->
-            { model | filter = filter }
-
 
 toggleComplete : Int -> List Entry -> List Entry
 toggleComplete id list =

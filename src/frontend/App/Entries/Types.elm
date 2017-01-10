@@ -24,4 +24,3 @@ type Msg
     = AddEntry String
     | RemoveEntry Int
     | ToggleComplete Int
-    | ApplyFilter Filter

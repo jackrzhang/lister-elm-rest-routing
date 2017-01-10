@@ -44,11 +44,7 @@ viewFilter ( filter, current ) =
         a
             [ href filterPath
             , class ("filter" ++ filterStyle)
-            , onLinkClick <| App.ChainMsgs
-                [ App.LinkClick filterPath
-                , App.MsgForControl (Control.ApplyFilter filter)
-                , App.MsgForEntries (Entries.ApplyFilter filter)
-                ]
+            , onLinkClick (App.LinkClick filterPath)
             ]
             [ text (toString filter)
             ]
