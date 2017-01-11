@@ -3,6 +3,9 @@ module App.Routes exposing (..)
 import Navigation
 import UrlParser exposing (Parser, (</>), oneOf, map, s, string)
 
+
+-- ROUTES -> PATHS
+
 type Route
     = All
     | Active
@@ -21,6 +24,8 @@ routeToPath route =
         Complete ->
             "/complete"
 
+
+-- PARSERS
 
 pathParser : Navigation.Location -> Maybe Route
 pathParser location =

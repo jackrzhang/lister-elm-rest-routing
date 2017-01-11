@@ -11,11 +11,6 @@ initialModel =
     }
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( initialModel, Cmd.none )
-
-
 -- UPDATE
 
 updateModel : Msg -> Model -> Model

@@ -21,25 +21,25 @@ view model =
             , value model.text
             , onInput (App.MsgForInput << Input.UpdateInput)
                 -- equivalent to: (\str -> App.MsgForInput (Input.UpdateInput str))
-            , onEnter (selectOnEnterMsg model)
+            , onEnter (enterInput model)
             ]
             []
         ]
 
 
-selectOnEnterMsg : Input.Model -> App.Msg
-selectOnEnterMsg model =
+enterInput : Input.Model -> App.Msg
+enterInput model =
     if model.text == "" then
         App.NoOp
     else 
         App.ChainMsgs
-            [ (createAddEntryMsg model)
+            [ (addEntry model)
             , (App.MsgForInput Input.ClearInput)
             ]
 
 
-createAddEntryMsg : Input.Model -> App.Msg
-createAddEntryMsg model =
-    model.text
-        |> Entries.AddEntry
+addEntry : Input.Model -> App.Msg
+addEntry model =
+    Entries.AddEntry model.text
+        |> Entries.MsgForCmd
         |> App.MsgForEntries

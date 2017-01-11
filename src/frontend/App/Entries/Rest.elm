@@ -51,5 +51,3 @@ entryEncoder id text complete =
 
 -- COMMANDS
 
-fetchAll : Cmd Entries.Msg
-

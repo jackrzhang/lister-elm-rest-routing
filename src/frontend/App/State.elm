@@ -3,7 +3,7 @@ module App.State exposing (..)
 import Navigation exposing (..)
 
 import App.Types exposing (..)
-import App.Control.Types as Control exposing (Filter(..))
+import App.Control.Types exposing (Filter(..))
 import App.Routes as Routes
 
 import App.Input.State as Input
@@ -15,7 +15,8 @@ import App.Control.State as Control
 
 init : Location -> ( Model, Cmd Msg )
 init location =
-    (locationToModel location initialModel) ! []
+    (locationToModel location initialModel) ! 
+        []
 
 
 initialModel : Model
@@ -31,7 +32,6 @@ initialModel =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-
         NoOp ->
             model ! []
 
@@ -45,16 +45,22 @@ update msg model =
             (List.foldl chain (model ! []) msgs)
 
         MsgForInput inputMsg ->
-            { model | input = Input.updateModel inputMsg model.input}
-                ! []
+            let input =
+                Input.updateModel inputMsg model.input
+            in 
+                { model | input = input } ! []
 
         MsgForEntries entriesMsg ->
-            { model | entries = Entries.updateModel entriesMsg model.entries }
-                ! []
+            let ( entries, cmd ) =
+                Entries.update entriesMsg model.entries
+            in
+                { model | entries = entries } ! [ cmd ]
 
         MsgForControl controlMsg ->
-            { model | control = Control.updateModel controlMsg model.control }
-                ! []
+            let control =
+                Control.updateModel controlMsg model.control
+            in 
+                { model | control = control } ! []
 
 
 -- HELPERS

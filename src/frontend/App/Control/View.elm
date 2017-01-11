@@ -7,7 +7,6 @@ import Utility.OnLinkClick exposing (onLinkClick)
 import App.Types as App
 import App.Routes as Routes
 import App.Control.Types as Control exposing (Filter(..))
-import App.Entries.Types as Entries exposing (..)
 
 
 view : Control.Model -> Html App.Msg

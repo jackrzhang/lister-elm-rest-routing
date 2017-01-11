@@ -44,8 +44,7 @@ viewEntry entry =
         div [ class "entry" ]
             [ span
                 [ class "checkmark" 
-                , onClick <|
-                    App.MsgForEntries (Entries.ToggleComplete entry.id)
+                , onClick (toggleComplete entry.id)
                 ]
                 [ text "☑ "
                 ]
@@ -56,10 +55,25 @@ viewEntry entry =
             , div [ class "container" ]
                 [ span 
                     [ class "x" 
-                    , onClick <|
-                        App.MsgForEntries (Entries.RemoveEntry entry.id)
+                    , onClick (removeEntry entry.id)
                     ] 
                     [ text " ×" 
                     ]
                 ]
             ]
+
+
+-- MSG HELPERS
+
+toggleComplete : Int -> App.Msg
+toggleComplete id =
+    Entries.ToggleComplete id
+        |> Entries.MsgForCmd
+        |> App.MsgForEntries
+
+
+removeEntry : Int -> App.Msg
+removeEntry id =
+    Entries.RemoveEntry id
+        |> Entries.MsgForCmd
+        |> App.MsgForEntries

@@ -1,6 +1,9 @@
 module App.Entries.Types exposing (..)
 
+import Http
+
 import App.Control.Types exposing (Filter)
+
 
 -- MODEL
 
@@ -21,6 +24,20 @@ type alias Model =
 -- MSG
 
 type Msg
-    = AddEntry String
+    = MsgForModel ModelMsg
+    | MsgForCmd CmdMsg
+
+
+type ModelMsg
+    = HttpError Http.Error
+    | FetchAllSuccess (List Entry)
+    | AddEntrySuccess Entry
+    | RemoveEntrySuccess Int
+    | ToggleCompleteSuccess Int
+
+
+type CmdMsg
+    = FetchAll
+    | AddEntry String
     | RemoveEntry Int
     | ToggleComplete Int

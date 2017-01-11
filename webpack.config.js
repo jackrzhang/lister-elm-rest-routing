@@ -81,7 +81,7 @@ fs.readdirSync('node_modules')
     nodeModules[mod] = `commonjs ${mod}`;
   });
 
-const backendConfig = {
+let backendConfig = {
 
   name: 'backend',
   target: 'node',
@@ -111,7 +111,7 @@ const backendConfig = {
 
 let config;
 if (process.env.NODE_ENV === 'production') {
-  frontendConfig = Object.assign(frontendConfig, {
+  const optimizations = {
 
     plugins: [
       new webpack.optimize.UglifyJsPlugin({
@@ -120,8 +120,9 @@ if (process.env.NODE_ENV === 'production') {
       new webpack.optimize.OccurrenceOrderPlugin()
     ]
 
-  });
+  }
 
+  frontendConfig = Object.assign(frontendConfig, optimizations);
   config = [ frontendConfig, backendConfig ];
 } else {
   frontendConfig = Object.assign(frontendConfig, {
