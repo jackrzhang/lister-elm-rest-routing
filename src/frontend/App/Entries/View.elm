@@ -63,17 +63,17 @@ viewEntry entry =
             ]
 
 
--- MSG HELPERS
+-- MSG CONTAINERS
 
 toggleComplete : Int -> App.Msg
 toggleComplete id =
-    Entries.ToggleComplete id
+    Entries.ToggleCompleteRequest id
         |> Entries.MsgForCmd
         |> App.MsgForEntries
 
 
 removeEntry : Int -> App.Msg
 removeEntry id =
-    Entries.RemoveEntry id
+    Entries.RemoveEntryRequest id
         |> Entries.MsgForCmd
         |> App.MsgForEntries

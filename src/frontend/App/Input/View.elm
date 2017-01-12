@@ -31,7 +31,7 @@ enterInput : Input.Model -> App.Msg
 enterInput model =
     if model.text == "" then
         App.NoOp
-    else 
+    else
         App.ChainMsgs
             [ (addEntry model)
             , (App.MsgForInput Input.ClearInput)
@@ -40,6 +40,6 @@ enterInput model =
 
 addEntry : Input.Model -> App.Msg
 addEntry model =
-    Entries.AddEntry model.text
+    Entries.AddEntryRequest model.text
         |> Entries.MsgForCmd
         |> App.MsgForEntries

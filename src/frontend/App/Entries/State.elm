@@ -3,7 +3,7 @@ module App.Entries.State exposing (..)
 import App.Types as App
 import App.Entries.Types exposing (..)
 import App.Control.Types exposing (Filter(..))
-
+import App.Entries.Rest as Rest
 
 -- INIT
 
@@ -13,6 +13,12 @@ initialModel =
     , filter = All
     , currentId = 0
     }
+
+
+initialCmd : Cmd App.Msg 
+initialCmd =
+    Rest.fetchAll
+
 
 
 -- UPDATE
@@ -30,42 +36,51 @@ update msg model =
 updateModel : ModelMsg -> Model -> Model
 updateModel modelMsg model =
     case modelMsg of
-        HttpError _ ->
+        FetchAllResponse (Ok list) ->
+            Debug.log "entries" { model | list = list }
+
+        FetchAllResponse (Err _) ->
             model
 
-        FetchAllSuccess entries ->
-            model
-
-        AddEntrySuccess entry ->
+        AddEntryResponse (Ok entry) ->
             model
             --{ model 
             --    | list = List.append model.list [ Entry model.currentId text False ]
             --    , currentId = model.currentId + 1
             --}
 
-        RemoveEntrySuccess id ->
+        AddEntryResponse (Err _) ->
+            model
+
+        RemoveEntryResponse (Ok id) ->
             model
             --{ model | list = List.filter (\entry -> not <| entry.id == id) model.list }
 
-        ToggleCompleteSuccess id ->
+        RemoveEntryResponse (Err _) ->
+            model
+
+        ToggleCompleteResponse (Ok id) ->
             model
             --{ model | list = toggleComplete id model.list }
+
+        ToggleCompleteResponse (Err _) ->
+            model
 
 
 updateCmd : CmdMsg -> Model -> Cmd App.Msg
 updateCmd cmdMsg model =
     case cmdMsg of
-        FetchAll ->
-            Cmd.none
+        FetchAllRequest ->
+            Rest.fetchAll
 
-        AddEntry text ->
-            Cmd.none
+        AddEntryRequest text ->
+            Rest.addEntry text
 
-        RemoveEntry id ->
-            Cmd.none
+        RemoveEntryRequest id ->
+            Rest.removeEntry id
 
-        ToggleComplete id ->
-            Cmd.none
+        ToggleCompleteRequest id ->
+            Rest.toggleComplete id
 
 
 -- HELPERS

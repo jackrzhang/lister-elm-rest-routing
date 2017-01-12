@@ -15,8 +15,7 @@ import App.Control.State as Control
 
 init : Location -> ( Model, Cmd Msg )
 init location =
-    (locationToModel location initialModel) ! 
-        []
+    ( (locationToModel location initialModel), initialCmd )
 
 
 initialModel : Model
@@ -25,6 +24,13 @@ initialModel =
     , entries = Entries.initialModel
     , control = Control.initialModel
     }
+
+
+initialCmd : Cmd Msg
+initialCmd = 
+    Cmd.batch
+        [ Entries.initialCmd
+        ]
 
 
 -- UPDATE
@@ -54,7 +60,7 @@ update msg model =
             let ( entries, cmd ) =
                 Entries.update entriesMsg model.entries
             in
-                { model | entries = entries } ! [ cmd ]
+                { model | entries = entries } ! [  cmd ]
 
         MsgForControl controlMsg ->
             let control =
