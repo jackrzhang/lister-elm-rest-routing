@@ -37,7 +37,7 @@ updateModel : ModelMsg -> Model -> Model
 updateModel modelMsg model =
     case modelMsg of
         FetchAllResponse (Ok list) ->
-            Debug.log "entries" { model | list = list }
+            { model | list = list }
 
         FetchAllResponse (Err _) ->
             model
