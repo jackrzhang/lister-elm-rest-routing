@@ -56,9 +56,8 @@ updateModel modelMsg model =
         RemoveEntryResponse (Err _) ->
             model
 
-        ToggleCompleteResponse (Ok id) ->
-            model
-            --{ model | list = toggleComplete id model.list }
+        ToggleCompleteResponse (Ok entry) ->
+            { model | list = toggleComplete entry.id model.list }
 
         ToggleCompleteResponse (Err _) ->
             model
@@ -76,8 +75,8 @@ updateCmd cmdMsg model =
         RemoveEntryRequest id ->
             Rest.removeEntry id
 
-        ToggleCompleteRequest id ->
-            Rest.toggleComplete id
+        ToggleCompleteRequest entry ->
+            Rest.toggleComplete entry
 
 
 -- HELPERS

@@ -44,7 +44,7 @@ viewEntry entry =
         div [ class "entry" ]
             [ span
                 [ class "checkmark" 
-                , onClick (toggleComplete entry.id)
+                , onClick (toggleComplete entry)
                 ]
                 [ text "☑ "
                 ]
@@ -65,9 +65,9 @@ viewEntry entry =
 
 -- MSG CONTAINERS
 
-toggleComplete : Int -> App.Msg
-toggleComplete id =
-    Entries.ToggleCompleteRequest id
+toggleComplete : Entries.Entry -> App.Msg
+toggleComplete entry =
+    Entries.ToggleCompleteRequest entry
         |> Entries.MsgForCmd
         |> App.MsgForEntries
 

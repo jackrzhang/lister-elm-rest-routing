@@ -32,11 +32,11 @@ type ModelMsg
     = FetchAllResponse (Result Error (List Entry))
     | AddEntryResponse (Result Error Entry)
     | RemoveEntryResponse (Result Error Int)
-    | ToggleCompleteResponse (Result Error Int)
+    | ToggleCompleteResponse (Result Error Entry)
 
 
 type CmdMsg
     = FetchAllRequest
     | AddEntryRequest String
     | RemoveEntryRequest Int
-    | ToggleCompleteRequest Int
+    | ToggleCompleteRequest Entry
