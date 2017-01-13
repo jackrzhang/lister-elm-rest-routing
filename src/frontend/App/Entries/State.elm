@@ -43,11 +43,9 @@ updateModel modelMsg model =
             model
 
         AddEntryResponse (Ok entry) ->
-            model
-            --{ model 
-            --    | list = List.append model.list [ Entry model.currentId text False ]
-            --    , currentId = model.currentId + 1
-            --}
+            { model 
+                | list = List.append model.list [ entry ]
+            }
 
         AddEntryResponse (Err _) ->
             model

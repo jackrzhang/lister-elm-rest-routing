@@ -17,7 +17,7 @@ fetchAll =
 
 addEntry : String -> Cmd App.Msg
 addEntry text =
-    Cmd.none
+    Http.send addEntryResponse (postEntry text)
 
 
 removeEntry : Int -> Cmd App.Msg
@@ -32,9 +32,16 @@ toggleComplete id =
 
 -- MSG CONTAINERS
 
-fetchAllResponse : (Result Error (List Entry) -> App.Msg)
+fetchAllResponse : Result Error (List Entry) -> App.Msg
 fetchAllResponse result =
     FetchAllResponse result
+        |> Entries.MsgForModel
+        |> App.MsgForEntries
+
+
+addEntryResponse : Result Error Entry -> App.Msg
+addEntryResponse result =
+    AddEntryResponse result
         |> Entries.MsgForModel
         |> App.MsgForEntries
 
@@ -44,6 +51,11 @@ fetchAllResponse result =
 getEntries : Http.Request (List Entry)
 getEntries =
     Http.get entriesUrl entriesDecoder
+
+
+postEntry : String -> Http.Request Entry
+postEntry text =
+     Http.post entriesUrl (Http.jsonBody (entryEncoder text False)) entryDecoder
 
 
 -- RESOURCES
@@ -75,11 +87,10 @@ entryDecoder =
 
 -- ENCODERS
 
-entryEncoder : Int -> String -> Bool -> Encode.Value
-entryEncoder id text complete =
+entryEncoder : String -> Bool -> Encode.Value
+entryEncoder text complete =
     Encode.object
-        [ ( "id", Encode.int id )
-        , ( "text", Encode.string text )
+        [ ( "text", Encode.string text )
         , ( "complete", Encode.bool complete )
         ]
 
