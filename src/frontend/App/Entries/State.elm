@@ -5,6 +5,7 @@ import App.Entries.Types exposing (..)
 import App.Control.Types exposing (Filter(..))
 import App.Entries.Rest as Rest
 
+
 -- INIT
 
 initialModel : Model
@@ -18,7 +19,6 @@ initialModel =
 initialCmd : Cmd App.Msg 
 initialCmd =
     Rest.fetchAll
-
 
 
 -- UPDATE
@@ -51,8 +51,7 @@ updateModel modelMsg model =
             model
 
         RemoveEntryResponse (Ok id) ->
-            model
-            --{ model | list = List.filter (\entry -> not <| entry.id == id) model.list }
+            { model | list = List.filter (\entry -> not <| entry.id == id) model.list }
 
         RemoveEntryResponse (Err _) ->
             model

@@ -22,7 +22,7 @@ addEntry text =
 
 removeEntry : Int -> Cmd App.Msg
 removeEntry id =
-    Cmd.none
+    Http.send removeEntryResponse (deleteEntry id)
 
 
 toggleComplete : Int -> Cmd App.Msg
@@ -46,6 +46,13 @@ addEntryResponse result =
         |> App.MsgForEntries
 
 
+removeEntryResponse : Result Error Int -> App.Msg
+removeEntryResponse result =
+    RemoveEntryResponse result
+        |> Entries.MsgForModel
+        |> App.MsgForEntries
+
+
 -- REQUESTS
 
 getEntries : Http.Request (List Entry)
@@ -56,6 +63,19 @@ getEntries =
 postEntry : String -> Http.Request Entry
 postEntry text =
      Http.post entriesUrl (Http.jsonBody (entryEncoder text False)) entryDecoder
+
+
+deleteEntry : Int -> Http.Request Int
+deleteEntry id =
+    Http.request
+        { method = "DELETE"
+        , headers = []
+        , url = (entryUrl id)
+        , body = Http.emptyBody
+        , expect = Http.expectStringResponse (\_ -> Ok id)
+        , timeout = Nothing
+        , withCredentials = False
+        }
 
 
 -- RESOURCES
