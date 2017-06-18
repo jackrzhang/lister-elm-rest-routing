@@ -7,8 +7,10 @@ import Json.Decode as Json
 
 onLinkClick : msg -> Attribute msg
 onLinkClick msg =
-   onWithOptions "click"
-    { stopPropagation = True
-    , preventDefault = True
-    }
-    (Json.succeed msg)
+    let options =
+        { stopPropagation = True
+        , preventDefault = True
+        } 
+
+    in
+        onWithOptions "click" options (Json.succeed msg)
