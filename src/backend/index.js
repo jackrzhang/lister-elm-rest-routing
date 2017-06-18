@@ -6,7 +6,10 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 
 const server = jsonServer.create();
-server.use(morgan('dev'));
+
+if (process.env.NODE_ENV === 'development') {
+  server.use(morgan('dev'));
+}
 
 // JSON API
 
