@@ -57,7 +57,8 @@ server.get('/*', (req, res) => {
   res.render('main');
 });
 
+const PORT = process.env.PORT ? process.env.PORT : '3000';
 
-server.listen(3000, () => {
-  console.log('Server listening at at port 3000.');
+server.listen(PORT, () => {
+  console.log(`Server listening at at port ${PORT}.`);
 });
