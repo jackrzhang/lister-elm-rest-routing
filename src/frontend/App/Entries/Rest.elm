@@ -105,7 +105,7 @@ putEntry { id, text, complete } =
 
 entriesUrl : String
 entriesUrl =
-    "http://localhost:3000/api/entries"
+    "/api/entries"
 
 
 entryUrl : Int -> String
